@@ -7,8 +7,8 @@ Bloodhound is a great tool that probably is a cornerstone for many pentesters. H
 ## Features
 
 * Export lists of entities to be used in other tools: 
-  * Want to nmap scan all computers that have a path to domain admin? Bloodtrail quickly gets you a list of targets that can be fed to nmap (or *nettrail*).
-  * Want to get a list of users that are logged on to a particular juicy machine to password-spray them? Bloodtrail gives you a list that you can feed to *crackmapexec*.
+  * Want to nmap scan all computers that have a path to domain admin? Bloodtrail quickly gets you a list of targets that can be fed to nmap (or [nettrail](https://github.com/yensk/nettrail)).
+  * Want to get a list of users that are logged on to a particular juicy machine to password-spray them? Bloodtrail gives you a list that you can feed to tools like *crackmapexec*.
   * Want to get a list of potentially outdated systems that you can focus your enumeration on? Bloodtrail has a predefined query for that.
   * ...
 * Get information that is cumbersome to extract in Bloodhound itself:
