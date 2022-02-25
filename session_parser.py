@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 import os
 import collections
 from zipfile import ZipFile
@@ -13,6 +14,17 @@ parsed_computer_sessions = None
 def parse(filepath):
     global parsed_user_sessions
     global parsed_computer_sessions
+
+    data_exists = False
+
+    for root, dirs, files in os.walk(filepath):
+        for file in files:
+            if file.lower().endswith("bloodhound.zip"):
+                data_exists = True
+
+    if not data_exists:
+        log.logger.error(f"[E] No Bloodhound files found at '{filepath}'")
+        exit()
 
     parse_computers(filepath)
     parse_users(filepath)

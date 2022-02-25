@@ -83,6 +83,11 @@ def print_all_user_sessions():
     users = element_query("MATCH (u:User) return u")
     print_user_sessions(sorted(users))
 
+def print_psexec_computers():
+    computers = element_query('MATCH (c:Computer) WHERE c.psexec_local_admin <> "not allowed" or c.psexec_builtin_admin <> "not allowed" return c')
+
+    for c in sorted(computers):
+        print(c)
 
 def print_object_groups(objects):
     for object_name in objects:
@@ -221,6 +226,8 @@ def set_object_prop(object_names, property_to_set, comment = ""):
 
 
 mode_help=[
+"* hosts: List all hosts.",
+"* users: List all users.",
 "* juicy_computers: List all computers that have a path to a highvalue target.",
 "* juicy_computer_sessions: List all computers that have a path to a highvalue target and the users that have a session on them. This can provide you a hint at login rights, that Bloodhound is not able to capture by itself.",
 "* juicy_users: List all users that have a path to a highvalue target.",
@@ -233,6 +240,7 @@ mode_help=[
 "* outdated_systems: List outdated systems.",
 "* high_value: List highvalue objects.",
 "* owned: List owned objects.",
+"* psexec_computers: List of computers that have psexec enabled",
 "* groups: List groups of the provided objects. Objects can be provided either as arguments or using the -i switch.",
 "* query: List the resulting objects of a custom query. The query has to be provided as argument.",
 "* set_owned: Set the owned attribute for specified objects in the Bloodhound database. Objects can be provided either as arguments or using the -i switch.",
@@ -325,11 +333,17 @@ elif arguments.mode == 'all_computer_sessions':
     print_all_computer_sessions()
 elif arguments.mode == 'outdated_systems':
     print_outdated_systems()
+elif arguments.mode == 'psexec_computers':
+    print_psexec_computers()
 elif arguments.mode == 'query':
     if len(input_data) == 0:
         print("You have to specify the query.")
         exit
     print_query_results(input_data[0])
+elif arguments.mode == 'hosts':
+    print_query_results('MATCH (n:Computer) RETURN n')
+elif arguments.mode == 'users':
+    print_query_results('MATCH (n:User) RETURN n')
 elif arguments.mode == 'set_owned':
     if len(input_data) == 0:
         print("You have to specify the object_names that should be marked or provide a file with the '-i' switch.")
